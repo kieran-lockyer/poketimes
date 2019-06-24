@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { deletePost } from '../actions/postActions'
+import Spinner from './Spinner'
 
 class Post extends Component {
-
     handleClick = () => {
         this.props.deletePost(this.props.post.id)
         this.props.history.push('/')
@@ -21,8 +21,10 @@ class Post extends Component {
                 </div>
             </div>
         ) : (
-                <div className="center">Loading post...</div>
-            )
+            <div className="center">
+                <Spinner />
+            </div>
+        )
 
         return (
             <div className="container">
@@ -35,7 +37,7 @@ class Post extends Component {
 const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.post_id
     return {
-        post: state.posts.find(post => post.id === id)
+        post: state.posts.find(post => post.id === parseInt(id))
     }
 }
 

@@ -6,8 +6,19 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers/rootReducer'
+import { populatePosts } from './actions/postActions'
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+
+fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(res => res.json())
+    .then(data => {
+        store.dispatch(populatePosts(data.splice(0,8)))
+    }).catch(err => {
+        console.error('error', err)
+    })
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
