@@ -6,6 +6,7 @@ import Spinner from './Spinner'
 
 class Home extends Component {
     render() {
+        console.log(this.props)
         const { posts } = this.props
         const postList = posts.length ? (
             posts.map(post => {
@@ -26,7 +27,7 @@ class Home extends Component {
                 <Spinner />
             </div>
             )
-
+        console.log(posts, posts.length)
         return (
             <div className="container home">
                 <h4 className="center">Home</h4>
