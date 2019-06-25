@@ -29,25 +29,6 @@ class Home extends Component {
 
     render() {
         const { posts, user } = this.props
-        const postList = posts.length ? (
-            posts.map(post => {
-                return (
-                    <Link to={'/' + post.id} key={post.id}>
-                        <div className="post card" >
-                            <img src={Pokeball} alt="A pokeball" />
-                            <div className="card-content">
-                                <span className="card-title red-text">{post.title}</span>
-                                <p className="black-text">{post.body}</p>
-                            </div>
-                        </div>
-                    </Link>
-                )
-            })
-        ) : (
-            <div className="center">
-                <Spinner />
-            </div>
-            )
         return (
             <div className="container home">
                 <h4 className="center">Home</h4>
@@ -69,7 +50,25 @@ class Home extends Component {
                         </form>
                     </div>
                 )}
-                {postList}
+                {posts.length ? (
+                    posts.map(post => {
+                        return (
+                            <Link to={'/' + post.id} key={post.id}>
+                                <div className="post card" >
+                                    <img src={Pokeball} alt="A pokeball" />
+                                    <div className="card-content">
+                                        <span className="card-title red-text">{post.title}</span>
+                                        <p className="black-text">{post.body}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        )
+                    })
+                ) : (
+                    <div className="center">
+                        <Spinner />
+                    </div>
+                )}
             </div>
         )
     }
