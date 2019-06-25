@@ -1,36 +1,21 @@
-import React, { Component, createContext } from 'react';
+import React, { createContext, useState } from 'react';
 
 export const UserContext = createContext()
 
-class UserProvider extends Component {
-    state = {
-        user: {}
+export const UserProvider = (props) => {
+    const [user, setUser] = useState({})
+
+    const login = () => {
+        setUser({...user, name: 'Kieran'})
     }
 
-    login = () => {
-        this.setState({
-            user: { name: 'Kieran' }
-        })
+    const logout = () => {
+        setUser({})
     }
 
-    logout = () => {
-        this.setState({
-            user: {}
-        })
-    }
-
-    render() {
-        return (
-            <UserContext.Provider
-                value={{
-                    ...this.state,
-                    login: this.login,
-                    logout: this.logout
-                }}>
-                {this.props.children}
-            </UserContext.Provider>
-        );
-    }
+    return (
+        <UserContext.Provider value={{user, login, logout}}>
+            {props.children}
+        </UserContext.Provider>
+    );
 }
-
-export default UserProvider;
