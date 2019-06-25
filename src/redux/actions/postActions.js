@@ -6,7 +6,6 @@ export const populatePosts = (posts) => {
 }
 
 export const addPost = (post) => {
-    console.log('here is the post', post)
     return {
         type: 'ADD_POST',
         post

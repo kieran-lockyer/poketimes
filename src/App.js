@@ -12,21 +12,19 @@ class App extends Component {
   render() {
     return (
       <UserProvider>
-        <BrowserRouter>
-          <div className="App">
-            <Navbar />
-            <Switch>
-              <PostProvider>
+        <PostProvider>
+          <BrowserRouter>
+            <div className="App">
+              <Navbar />
+              <Switch>
                 <Route exact path='/' component={Home} />
-              </PostProvider>
-              <Route path='/about' component={About} />
-              <Route path='/contact' component={Contact} />
-              <PostProvider>
+                <Route path='/about' component={About} />
+                <Route path='/contact' component={Contact} />
                 <Route path='/:post_id' component={Post} />
-              </PostProvider>
-            </Switch>
-          </div>
-        </BrowserRouter>
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </PostProvider>
       </UserProvider>
     );
   }

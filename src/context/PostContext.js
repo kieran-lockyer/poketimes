@@ -7,7 +7,7 @@ class PostProvider extends Component {
         posts: []
     }
     
-    componentWillMount() {
+    componentDidMount() {
         fetch('http://www.mocky.io/v2/5d117351310000a30808cc92')
             .then(res => res.json())
             .then(data => {
@@ -29,7 +29,7 @@ class PostProvider extends Component {
 
     deletePost = (id) => {
         this.setState({
-            posts: this.state.posts.filter(post => { return post.id !== id })
+            posts: [...this.state.posts.filter(post => { return post.id !== parseInt(id) })]
         })
     }
 

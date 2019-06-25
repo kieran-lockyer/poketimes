@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { deletePost } from '../redux/actions/postActions'
+// import { connect } from 'react-redux'
+// import { deletePost } from '../redux/actions/postActions'
 import Spinner from './Spinner'
+import { PostContext } from '../context/PostContext';
 
 class Post extends Component {
-    handleClick = () => {
-        this.props.deletePost(this.props.post.id)
+    static contextType = PostContext
+
+    handleClick = (e) => {
+        e.preventDefault()
+        this.context.deletePost(this.props.match.params.post_id)
         this.props.history.push('/')
     }
 
     render() {
-        console.log('post', this.props.post)
-        const post = this.props.post ? (
+        let id = this.props.match.params.post_id
+        const postData = this.context.posts.find(post => post.id === parseInt(id))
+        const post = postData ? (
             <div className="post">
-                <h4 className="center">{this.props.post.title}</h4>
-                <p>{this.props.post.body}</p>
+                <h4 className="center">{postData.title}</h4>
+                <p>{postData.body}</p>
                 <div className="center">
                     <button className="btn grey" onClick={this.handleClick}>
                         Delete Post
@@ -35,17 +40,18 @@ class Post extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    let id = ownProps.match.params.post_id
-    return {
-        post: state.posts.find(post => post.id === parseInt(id))
-    }
-}
+// const mapStateToProps = (state, ownProps) => {
+//     let id = ownProps.match.params.post_id
+//     return {
+//         post: state.posts.find(post => post.id === parseInt(id))
+//     }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        deletePost: (id) => { dispatch(deletePost(id)) }
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         deletePost: (id) => { dispatch(deletePost(id)) }
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+// export default connect(mapStateToProps, mapDispatchToProps)(Post)
+export default Post
