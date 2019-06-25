@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
-import { login } from '../redux/actions/userAction'
+import { login, logout } from '../redux/actions/userAction'
 
 const Navbar = (props) => {
     const { user } = props
-    console.log(user.name)
     const contextualMenu = !user.name ? (
         <nav className="nav-wrapper red darken-3">
             <div className="container">
@@ -27,7 +26,7 @@ const Navbar = (props) => {
                     <li><NavLink to="/about">About</NavLink></li>
                     <li><NavLink to="/contact">Contact</NavLink></li>
                     <li><NavLink to="/contact">{user.name}</NavLink></li>                        
-                    <li><NavLink to="/" onClick={() => console.log('logging out')}>Log Out</NavLink></li>
+                    <li><NavLink to="/" onClick={props.logout}>Log Out</NavLink></li>
                 </ul>
             </div>
         </nav>
@@ -45,7 +44,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: () => { dispatch(login()) }
+        login: () => { dispatch(login()) },
+        logout: () => { dispatch(logout()) }
     }
 }
 

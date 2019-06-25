@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { deletePost } from '../actions/postActions'
+import { deletePost } from '../redux/actions/postActions'
 import Spinner from './Spinner'
 
 class Post extends Component {

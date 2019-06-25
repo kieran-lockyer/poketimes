@@ -5,11 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import rootReducer from './reducers/rootReducer'
-import { populatePosts } from './actions/postActions'
+import rootReducer from './redux/reducers/rootReducer'
+import { populatePosts } from './redux/actions/postActions'
 
 const store = createStore(rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({trace:true})
 )
 
 fetch('https://jsonplaceholder.typicode.com/posts')
