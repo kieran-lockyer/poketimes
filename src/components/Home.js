@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Pokeball from '../pokeball.png'
-// import { connect } from 'react-redux'
 import Spinner from './Spinner'
-// import { addPost } from '../redux/actions/postActions'
 import { PostContext } from '../context/PostContext';
 import { UserContext } from '../context/UserContext';
 
@@ -20,14 +18,14 @@ class Home extends Component {
         })
     }
 
-    // handleSubmit = (e) => {
-    //     e.preventDefault()
-    //     this.context.addPost(this.state)
-    //     this.setState({
-    //         title: '',
-    //         body:''
-    //     })
-    // }
+    handleSubmit = (e, addPost) => {
+        e.preventDefault()
+        addPost(this.state)
+        this.setState({
+            title: '',
+            body:''
+        })
+    }
 
     render() {
         return (
@@ -38,14 +36,7 @@ class Home extends Component {
                         {userContext.user.name && (
                             <div className="row center">
                                 <h5 className="col l12">Add Post</h5>
-                                <form onSubmit={(e) => {
-                                    e.preventDefault()
-                                    postContext.addPost(this.state)
-                                    this.setState({
-                                        title: '',
-                                        body: ''
-                                    })
-                                }} className="col l12">
+                                <form onSubmit={(e) => this.handleSubmit(e, postContext.addPost)} className="col l12">
                                     <div className="input-field">
                                         <input id="title" type="text" value={this.state.title} onChange={this.handleChange} />
                                         <label htmlFor="title">Title</label>
@@ -86,18 +77,4 @@ class Home extends Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         // posts: state.posts,
-//         user: state.user
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         addPost: (post) => { dispatch(addPost(post))}
-//     }
-// }
-
-// export default connect(mapStateToProps)(Home)
 export default Home
