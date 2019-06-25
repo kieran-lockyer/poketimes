@@ -11,7 +11,6 @@ const Home = () => {
     const { posts, addPost } = useContext(PostContext)
 
     const handleChange = (e) => {
-        e.preventDefault()
         setNewPost({...newPost, [e.target.id]: e.target.value})
     }
 
