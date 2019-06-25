@@ -1,50 +1,35 @@
-import React, { Component, createContext } from 'react';
+import React, { createContext, useState , useEffect} from 'react';
 
 export const PostContext = createContext()
 
-class PostProvider extends Component {
-    state = { 
-        posts: []
-    }
+export const PostProvider = (props) => {
+    const [posts, setPosts] = useState([])
     
-    componentDidMount() {
+    useEffect(() => {
         fetch('http://www.mocky.io/v2/5d117351310000a30808cc92')
             .then(res => res.json())
             .then(data => {
-                this.populatePosts(data)
+                populatePosts(data)
             }).catch(err => {
                 console.error('error', err)
             })
+    }, [])
+
+    const populatePosts = (posts) => {
+        setPosts(posts.reverse())
     }
 
-    populatePosts = (posts) => {
-        this.setState({ posts: posts.reverse() })
+    const addPost = (post) => {
+        setPosts([{ title: post.title, body: post.body, id: posts[0].id + 1 }, ...posts])
     }
 
-    addPost = (post) => {
-        this.setState({
-            posts: [{ title: post.title, body: post.body, id: this.state.posts[0].id + 1 }, ...this.state.posts]
-        })    
+    const deletePost = (id) => {
+        setPosts(posts.filter(post => { return post.id !== parseInt(id) }))
     }
 
-    deletePost = (id) => {
-        this.setState({
-            posts: [...this.state.posts.filter(post => { return post.id !== parseInt(id) })]
-        })
-    }
-
-    render() { 
-        return ( 
-            <PostContext.Provider
-                value={{
-                    ...this.state,
-                    addPost: this.addPost,
-                    deletePost: this.deletePost
-                }}>
-                {this.props.children}
-            </PostContext.Provider>
-         );
-    }
+    return ( 
+        <PostContext.Provider value={{ posts, addPost, deletePost }}>
+            {props.children}
+        </PostContext.Provider>
+    );
 }
- 
-export default PostProvider;
