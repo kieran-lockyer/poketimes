@@ -3,16 +3,53 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addPost } from '../redux/actions/postActions'
 import Spinner from './Spinner'
-import Form from './Form';
 import Pokeball from '../pokeball.png'
 
 class Home extends Component {
+    state = {
+        title: '',
+        body: ''
+    }
+
+    handleChange = (e) => {
+        e.preventDefault()
+        this.setState({
+            [e.target.id]: e.target.value
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.props.addPost(this.state)
+        this.setState({
+            title: '',
+            body:''
+        })
+    }
+
     render() {
-        const { posts, user, addPost } = this.props
+        const { posts, user } = this.props
         return (
             <div className="container home">
                 <h4 className="center">Home</h4>
-                {user.name && <Form addPost={addPost} />}
+                {user.name && (
+                    <div className="row center">
+                        <h5 className="col l12">Add Post</h5>
+                        <form onSubmit={this.handleSubmit} className="col l12">
+                            <div className="input-field">
+                                <input id="title" type="text" value={this.state.title} onChange={this.handleChange} />
+                                <label htmlFor="title">Title</label>
+                            </div>
+                            <div className="input-field">
+                                <input id="body" type="text" value={this.state.body} onChange={this.handleChange} />
+                                <label htmlFor="body">Body</label>
+                            </div>
+                            <div className="input-field">
+                                <button className="btn red white-text" type="submit">Submit Post</button>
+                            </div>
+                        </form>
+                    </div>
+                )}
                 {posts.length ? (
                     posts.map(post => {
                         return (
