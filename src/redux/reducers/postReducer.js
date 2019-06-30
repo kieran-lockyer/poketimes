@@ -4,7 +4,6 @@ const postReducer = (state = [], action) => {
             return action.posts.reverse()
         
         case "ADD_POST":
-            console.log(action)
             return [{ title: action.post.title, body: action.post.body, id: state[0].id + 1 }, ...state]
         
         case "DELETE_POST":
