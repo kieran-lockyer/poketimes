@@ -15,7 +15,7 @@ const store = createStore(rootReducer,
 fetch('http://www.mocky.io/v2/5d117351310000a30808cc92')
     .then(res => res.json())
     .then(data => {
-        store.dispatch(populatePosts(data.splice(0,8)))
+        store.dispatch(populatePosts(data))
     }).catch(err => {
         console.error('error', err)
     })
