@@ -1,34 +1,23 @@
-import React, { createContext, useState , useEffect} from 'react';
+import React, { createContext, useEffect, useReducer} from 'react';
+import { postReducer } from './postReducer';
 
 export const PostContext = createContext()
 
 export const PostProvider = (props) => {
-    const [posts, setPosts] = useState([])
+    const [posts, dispatch] = useReducer(postReducer, [], )
     
     useEffect(() => {
         fetch('http://www.mocky.io/v2/5d117351310000a30808cc92')
             .then(res => res.json())
             .then(data => {
-                populatePosts(data)
+                dispatch({type: 'POPULATE_POSTS', posts: data})
             }).catch(err => {
                 console.error('error', err)
             })
     }, [])
 
-    const populatePosts = (posts) => {
-        setPosts(posts.reverse())
-    }
-
-    const addPost = (post) => {
-        setPosts([{ title: post.title, body: post.body, id: posts[0].id + 1 }, ...posts])
-    }
-
-    const deletePost = (id) => {
-        setPosts(posts.filter(post => { return post.id !== parseInt(id) }))
-    }
-
-    return ( 
-        <PostContext.Provider value={{ posts, addPost, deletePost }}>
+    return (
+        <PostContext.Provider value={{ posts, dispatch}}>
             {props.children}
         </PostContext.Provider>
     );

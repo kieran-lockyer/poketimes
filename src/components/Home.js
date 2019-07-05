@@ -6,22 +6,23 @@ import { PostContext } from '../context/PostContext';
 import { UserContext } from '../context/UserContext';
 
 const Home = () => {
-    const [newPost, setNewPost] = useState({title: '', body: ''})
+    const [newPost, setNewPost] = useState({ title: '', body: '' })
     const { user } = useContext(UserContext)
-    const { posts, addPost } = useContext(PostContext)
+    const { posts, dispatch } = useContext(PostContext)
 
     const handleChange = (e) => {
-        setNewPost({...newPost, [e.target.id]: e.target.value})
+        setNewPost({ ...newPost, [e.target.id]: e.target.value })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        addPost(newPost)
-        setNewPost({title: '', body: ''})
+        dispatch({ type: 'ADD_POST', post: newPost })
+        setNewPost({ title: '', body: '' })
     }
 
-    return ( 
+    return (
         <div className="container home">
+            {console.log(posts)}
             <h4 className="center">Home</h4>
             {user.name && (
                 <div className="row center">

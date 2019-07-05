@@ -3,7 +3,7 @@ import { NavLink, withRouter } from 'react-router-dom'
 import { UserContext } from '../context/UserContext';
 
 const Navbar = () => {
-    const { user, login, logout } = useContext(UserContext)
+    const { user, dispatch } = useContext(UserContext)
     return (
         <nav className="nav-wrapper red darken-3">
             <div className="container">
@@ -15,10 +15,10 @@ const Navbar = () => {
                     {user.name ? (
                         <Fragment>
                             <li><NavLink to="/contact">{user.name}</NavLink></li>
-                            <li><NavLink to="/" onClick={logout}>Log Out</NavLink></li>
+                            <li><NavLink to="/" onClick={() => { dispatch({type: 'LOGOUT'})}}>Log Out</NavLink></li>
                         </Fragment>
                     ) : (
-                        <li><NavLink to="/" onClick={login}>Sign In</NavLink></li>
+                        <li><NavLink to="/" onClick={() => { dispatch({ type: 'LOGIN' }) }}>Sign In</NavLink></li>
                     )}
                 </ul>
             </div>

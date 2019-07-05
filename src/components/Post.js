@@ -3,11 +3,11 @@ import Spinner from './Spinner'
 import { PostContext } from '../context/PostContext';
 
 const Post = (props) => {
-    const { posts, deletePost } = useContext(PostContext)
+    const { posts, dispatch } = useContext(PostContext)
 
     const handleClick = (e) => {
         e.preventDefault()
-        deletePost(id)
+        dispatch({ type: 'DELETE_POST', id })
         props.history.push('/')
     }
 
